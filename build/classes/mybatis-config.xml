@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 만약 DB 검색 결과가 빈칸이라면 null로 인식하게 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" /> <!-- NULL 대문자 유의 -->
+	</settings>
+	
+	<!-- 별칭: 서블릿, 자바빈즈의 풀클래스명을 별칭으로 사용할 수 있도록 등록하는 것 -->
+	<typeAliases>
+  		<typeAlias type="com.kh.mybatis.member.model.vo.Member1" alias="Member1"/>
+  		<typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board"/>
+  		<typeAlias type="com.kh.mybatis.board.model.vo.Reply" alias="Reply"/>
+  	</typeAliases>	
+	
+	
+	<!-- mybatis에서 연동할 DB 정보들을 등록하는 영역 -->
+	<environments default="development">
+		<environment id="development">
+		
+			<!-- * transactionManager type=""
+					- JDBC: 트랜잭션을 직접 관리(수동 commit) 
+					- MANAGED: 트랜잭션 권한을 mybatis에게 넘김. 즉 나는 트랜잭션에 대해 영향을 행사하지 않음 (자동 commit) 
+			 -->
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED"> <!-- POOLED/UNPOOLED -->
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="mybatis" />
+				<property name="password" value="1234" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- * mapper: 실행할 SQL문들을 기록해둔 mapper 파일들을 '등록'하는 영역 -->
+	<mappers>
+		<!-- <mapper resource="org/mybatis/example/BlogMapper.xml" /> -->
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/board-mapper.xml" />
+	</mappers>
+</configuration>
+
+
+
+
+
+
+
+
+

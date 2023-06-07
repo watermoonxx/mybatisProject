@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+	<resultMap type="Board" id="boardResultSet"> <!-- type="Board", package com.kh.mybatis.board.model.vo.Board.java 의미 -->
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="USER_ID" property="boardWriter" />
+		<result column="COUNT" property="count" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+	<!-- 별칭은 mybatis-config.xml 에서 관리 --> 
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+	
+	
+	<select id="selectTotalRecord" resultType="_int"> <!-- _int: MyBatis 문서 매퍼 설정 참고 -->
+		SELECT COUNT(*) FROM BOARD
+		WHERE STATUS = 'Y'
+	</select>
+	<select id="selectList" resultMap="boardResultSet">
+		SELECT BOARD_NO, BOARD_TITLE, USER_ID, COUNT, CREATE_DATE
+		FROM BOARD b
+		JOIN MEMBER ON (BOARD_WRITER = USER_ID)
+		WHERE b.STATUS = 'Y'
+		ORDER BY BOARD_NO DESC	
+	</select>
+	<update id="increaseCount" parameterType="_int">
+		UPDATE BOARD
+		SET COUNT = COUNT + 1
+		WHERE BOARD_NO = #{boardNo}
+			AND STATUS = 'Y'
+	</update>
+	<select id="selectBoard" parameterType="_int" resultMap="boardResultSet">
+		SELECT * FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet" >
+		SELECT * FROM REPLY 
+		WHERE REF_BNO = #{boardNo}
+			AND STATUS = 'Y'
+		ORDER BY REPLY_NO DESC
+	</select>
+	
+	
+	
+	
+	
+</mapper>
+

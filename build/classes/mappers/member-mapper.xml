@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	매핑된 SQL 구문 살펴보기
+	https://mybatis.org/mybatis-3/ko/getting-started.html 
+	-->
+
+<mapper namespace="memberMapper">
+	<!-- * DML문일 경우 
+	<insert | update | delete id="식별자" [parameterType="전달받을 자바타입(풀클래스명) | 별칭"] 
+	</<insert | update | delete> 
+		
+		// 실행결과가 처리된 행수(int)이기 때문에 resultType 또는 resultMap에 대한 속성은 쓰지 않아도 됨 
+		* SELECT문일 경우 <select id="식별자" [parameterType="전달받을 자바타입(풀클래스명) | 별칭"]> 
+		resultType = "조회된 결과를 반환하고자 하는 자바 타입 명시 | resultMap = "조회 결과를 매핑할 resultMap의 id" </select> -->
+
+
+	<resultMap id="memberResultSet" type="Member1">
+		<result column="USER_ID" property="user_ID" />
+		<result column="USER_PWD" property="user_Pwd" />
+		<result column="USER_NAME" property="user_Name" />
+		<result column="EMAIL" property="email" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="GENDER" property="gender" />
+		<result column="PHONE" property="phone" />
+		<result column="ADDRESS" property="address" />
+		<result column="ENROLL_DATE" property="enroll_date" />
+		<result column="MODIFY_DATE" property="modify_date" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	<!-- column은 데이터베이스 컬럼명, property는 자바빈즈의 멤버 변수(대소문자 구분함) -->
+
+	<insert id="insertMember" parameterType="Member1">
+	<!-- 
+		id 값은 메소드명과 동일
+		parameterType은 com.kh.mybatis.member.model.vo.Member1 | 별칭 Member1
+		(Member1이 자바빈즈) 
+	-->
+	
+		
+		<!-- DB 컬럼명과 일치해야 함 -->
+		INSERT INTO MEMBER(USER_ID, USER_PWD, USER_NAME, EMAIL, BIRTHDAY,
+		GENDER, PHONE, ADDRESS)
+		VALUES(#{USER_ID}, #{USER_PWD}, #{USER_NAME}, #{EMAIL}, #{BIRTHDAY}, #{GENDER},
+		#{PHONE}, #{ADDRESS})
+	</insert>
+
+
+	<!-- 해당 SQL을 메소드와 연결해서 처리. id는 연결할 메소드명, resultType은 리턴, parameterType은 매개변수 (메소드 정보를 알려주는 것) -->
+	<!-- SQL문에 쌍따옴표, 세미콜론 명시하지 않음  -->
+	<select id="loginMember" parameterType="Member1"
+		resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE USER_ID = #{USER_ID}
+		AND USER_PWD = #{USER_PWD}
+		AND STATUS = 'Y'
+	</select>
+
+
+
+
+	<!-- <insert id="insertMember" parameterType="Member1">
+		DB 컬럼명과 일치해야 함
+		INSERT INTO MEMBER(USER_ID, USER_PWD, USER_NAME, EMAIL, BIRTHDAY,
+		GENDER, PHONE, ADDRESS) VALUES(#{USER_ID}, #{USER_PWD}, #{USER_NAME},
+		#{EMAIL}, #{BIRTHDAY}, #{GENDER}, #{PHONE}, #{ADDRESS})
+		insert into member(user_ID, user_Pwd, user_Name, email, birthday, 
+			gender, phone, address) values(#{user_ID}, #{user_Pwd}, #{user_Name}, #{email}, 
+			#{birthday}, #{gender}, #{phone}, #{address})
+	</insert>
+
+	<select id="loginMember" parameterType="Member1"
+		resultMap="memberResultSet">
+		SELECT * FROM MEMBER
+		WHERE user_ID = #{ user_ID }
+		AND user_Pwd = #{ user_Pwd }
+		AND STATUS = 'Y'
+	</select> -->
+</mapper>
+  
