@@ -25,6 +25,7 @@
 		SELECT COUNT(*) FROM BOARD
 		WHERE STATUS = 'Y'
 	</select>
+	
 	<select id="selectList" resultMap="boardResultSet">
 		SELECT BOARD_NO, BOARD_TITLE, USER_ID, COUNT, CREATE_DATE
 		FROM BOARD b
@@ -32,14 +33,18 @@
 		WHERE b.STATUS = 'Y'
 		ORDER BY BOARD_NO DESC	
 	</select>
+	
 	<update id="increaseCount" parameterType="_int">
 		UPDATE BOARD
 		SET COUNT = COUNT + 1
 		WHERE BOARD_NO = #{boardNo}
 			AND STATUS = 'Y'
 	</update>
+	
 	<select id="selectBoard" parameterType="_int" resultMap="boardResultSet">
-		SELECT * FROM BOARD
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, USER_ID, COUNT, CREATE_DATE
+		FROM BOARD
+		JOIN MEMBER ON (BOARD_WRITER = USER_ID)
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	

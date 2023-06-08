@@ -1,7 +1,5 @@
 package com.kh.mybatis.board.model.service;
 
-import static com.kh.mybatis.common.template.Template.getSqlSession;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,44 +9,25 @@ import com.kh.mybatis.board.model.dao.BoardDao;
 import com.kh.mybatis.board.model.vo.Board;
 import com.kh.mybatis.board.model.vo.Reply;
 import com.kh.mybatis.common.model.vo.PageInfo;
+import static com.kh.mybatis.common.template.Template.*;
 
 
 public class BoardServiceImpl implements BoardService {
 	
 	private BoardDao bDao = new BoardDao();
-	private SqlSession sqlSession;
+	SqlSession sqlSession;
 	
-	public BoardServiceImpl() {
-        sqlSession = getSqlSession();  // sqlSession 초기화
-    }
-
 	@Override
-	/*
 	public int selectTotalRecord() {
-		SqlSession sqlSession = getSqlSession();
-		int totalRecord = bDao.selectTotalRecord(sqlSession);
-		sqlSession.close();
-		return totalRecord;
-	}
-	*/
-	public int selectTotalRecord() {
-		SqlSession sqlSession = getSqlSession();
+		sqlSession = getSqlSession();
 		int totalRecord = bDao.selectTotalRecord(sqlSession);
 		sqlSession.close();
 		return totalRecord;
 	}
 
 	@Override
-	/*
 	public ArrayList<Board> selectList(PageInfo pi) {
-		SqlSession sqlSession = getSqlSession();
-		ArrayList<Board> list = bDao.selectList(sqlSession, pi);
-		sqlSession.close();
-		return list;
-	}
-	*/
-	public ArrayList<Board> selectList(PageInfo pi) {
-		SqlSession sqlSession = getSqlSession();
+		sqlSession = getSqlSession();
 		ArrayList<Board> list = bDao.selectList(sqlSession, pi);
 		sqlSession.close();
 		return list;
@@ -67,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board selectBoard(int boardNo) {
-		SqlSession sqlSession = getSqlSession();
+		sqlSession = getSqlSession();
 		Board b = bDao.selectBoard(sqlSession, boardNo);
 		sqlSession.close();
 		return b;
@@ -75,20 +54,26 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public ArrayList<Reply> selectReplyList(int boardNo) {
+		sqlSession = getSqlSession();
 		ArrayList<Reply> list = bDao.selectReplyList(sqlSession, boardNo);
-		return null;
+		sqlSession.close();
+		return list;
 	}
 
 	@Override
 	public int selectSearchCount(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		sqlSession = getSqlSession();
+		int searchCount = bDao.selectSearchCount(sqlSession, map);
+		sqlSession.close();
+		return searchCount;
 	}
 
 	@Override
 	public ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		sqlSession = getSqlSession();
+		ArrayList<Board> list = bDao.selectSearchList(sqlSession, map, pi);
+		sqlSession.close();
+		return list;
 	}
 	
 	

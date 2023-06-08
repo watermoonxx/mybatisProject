@@ -54,8 +54,8 @@
 		resultMap="memberResultSet">
 		SELECT * FROM MEMBER
 		WHERE USER_ID = #{USER_ID}
-		AND USER_PWD = #{USER_PWD}
-		AND STATUS = 'Y'
+			AND USER_PWD = #{USER_PWD}
+			AND STATUS = 'Y'
 	</select>
 
 

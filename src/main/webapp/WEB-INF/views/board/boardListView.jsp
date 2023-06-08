@@ -7,17 +7,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.outer a {
-	color: #ffffff;
-	text-decoration: none;
-}
-
-
-#list-area {
-	border: 1px solid #ffffff;
-	text-align: center;
-	border-collapse: collapse;
-}
+	.outer a {
+		color: #ffffff;
+		text-decoration: none;
+	}
+	
+	
+	#list-area {
+		border: 1px solid #ffffff;
+		text-align: center;
+		border-collapse: collapse;
+	}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 				</select> 
-				<input type="text" name="keyword" value=""> 
+				<input type="text" name="keyWord" value="${keyWord}"> 
 				<input type="submit" value="검색"> 
 				<input type="hidden" name="nowPage" value="1">
 			</form>
@@ -67,7 +67,7 @@
 
 		<div id="paging-area">
 			<c:if test="${pi.nowPage ne 1}">
-				<a href="list.bo?nowPage=${pi.nowPage-1}">[이전]</a>
+				<a href="list.bo?nowPage=${pi.nowPage - 1}">[이전]</a>
 			</c:if>
 			<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
 				<a href="list.bo?nowPage=${p}">[${p}]</a>
