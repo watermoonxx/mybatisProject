@@ -8,6 +8,6 @@
 </head>
 <body>
 	<jsp:include page="common/menubar.jsp" />
-	메인 수정 수정 
+	메인 테스트 
 </body>
 </html>
